@@ -124,12 +124,12 @@ export const home = `<section class="hero">
     </article>`).join('')}
   </div>
 </section>
+${linkFlow}
 <section class="soft"><div class="wrap section split">
   <div><h2>Due domini, due usi.</h2><p>Scegli il piano in base a come userai il link.</p></div>
   <dl class="domains"><div><dt class="mono">shrtnfree.link</dt><dd>Link gratuiti, con destinazione fissa e senza garanzia di durata.</dd></div>
     <div><dt class="mono">shrtn.link</dt><dd>Link per imprese, con destinazione modificabile. Il piano con sottodominio include un indirizzo con il nome della tua azienda.</dd></div></dl>
 </div></section>
-${linkFlow}
 <section class="wrap customers" aria-labelledby="customers-title">
   <h2 id="customers-title">Chi usa Shrtn.link</h2>
   <ul class="customer-logos" role="list">
