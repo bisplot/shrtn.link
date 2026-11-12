@@ -137,7 +137,7 @@ ${linkFlow}
     <li><img src="/assets/customers/helioh2.png" width="284" height="240" alt="HelioH2"></li>
     <li><img src="/assets/customers/pintore.png" width="626" height="114" alt="Pintore Editore"></li>
     <li><img src="/assets/customers/negri.png" width="261" height="228" alt="Centro Servizi Negri"></li>
-    <li><span class="customer-name">Kopernik Srl</span></li>
+    <li><img class="kopernik-logo" src="/assets/customers/kopernik.jpeg" width="100" height="100" alt="Kopernik Srl"></li>
     <li><img src="/assets/customers/sailgroup.png" width="457" height="240" alt="SailGroup"></li>
   </ul>
 </section>`;

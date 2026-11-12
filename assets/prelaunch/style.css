@@ -194,7 +194,11 @@ footer .bar { min-height: 98px; flex-wrap: wrap; padding-block: 18px; }
   max-height: 55px;
   filter: brightness(0) invert(.35);
 }
-.customer-name { color: #595959; font-size: .95rem; font-weight: 600; }
+.customer-logos .kopernik-logo {
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+  opacity: .72;
+}
 @media (max-width: 740px) {
   .customer-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 }
