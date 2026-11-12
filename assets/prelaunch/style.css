@@ -94,11 +94,34 @@ footer .bar { min-height: 98px; flex-wrap: wrap; padding-block: 18px; }
 .link-button { background: none; border: 0; padding: 2px 0; color: var(--mint); font-size: .8rem; text-decoration: underline; text-underline-offset: .2em; }
 .hero :focus-visible { outline-color: var(--mint); }
 
-.benefits { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-.benefits article { padding: clamp(18px, 3vw, 32px); }
-.benefits article + article { border-left: 1px solid var(--line); }
-.feature-icon { color: var(--green); font-size: 1.3rem; }
-.benefits h2 { font-size: 1.125rem; margin: 16px 0 10px; letter-spacing: -.025em; }
+.principles {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: clamp(28px, 7vw, 84px);
+}
+.principles-intro h2 { max-width: 14ch; font-size: clamp(2rem, 3.8vw, 3rem); }
+.principles-intro p { max-width: 36ch; margin-top: 16px; }
+.benefits article {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: start;
+  gap: 14px;
+  padding-block: 18px;
+  border-top: 1px solid var(--line);
+}
+.benefits article:last-child { border-bottom: 1px solid var(--line); }
+.feature-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--green);
+}
+.feature-icon svg { width: 23px; height: 23px; }
+.benefits h3 { margin: 0 0 5px; font-size: 1.0625rem; font-weight: 600; line-height: 1.35; }
 .benefits p { font-size: .9rem; }
 .soft { background: #eef2f6; border-block: 1px solid var(--line); }
 .split, .demo-page { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(24px, 6vw, 80px); align-items: center; }
@@ -167,8 +190,7 @@ dialog #signup { margin-top: 14px; }
 }
 
 @media (max-width: 740px) {
-  .hero-grid, .split, .demo-page, .plans, .benefits { grid-template-columns: 1fr; }
-  .benefits article + article { border-left: 0; border-top: 1px solid var(--line); }
+  .hero-grid, .split, .demo-page, .plans, .principles { grid-template-columns: 1fr; }
   .hero-grid { padding-block: 48px; }
   .nav-cta { display: none; }
   .footer-brand { flex-direction: column; align-items: flex-start; }

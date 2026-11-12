@@ -74,9 +74,21 @@ ${interestDialog(apiEnabled)}
 }
 
 const benefits = [
-  ['⤴', 'Pensato per la stampa', 'Menu, volantini, etichette e packaging. Con Premium cambi la destinazione senza ristampare il QR.'],
-  ['✓', 'Il nome della tua azienda', 'Il sottodominio è riservato alle imprese verificate che dimostrano il controllo del proprio dominio.'],
-  ['⊘', 'Nessuna statistica sui clic', 'Non mostriamo statistiche sui clic e non profiliamo i visitatori.'],
+  {
+    icon: '<path d="M20 11a8 8 0 1 0-2 6m2-11v5h-5"/>',
+    title: 'Lo stesso QR, anche quando la pagina cambia',
+    detail: 'Con Premium aggiorni la destinazione del link e continui a usare il QR che hai già stampato.',
+  },
+  {
+    icon: '<path d="M5 20V5h11v15M16 10h3v10M3 20h18M8 8h1m3 0h1m-5 4h1m3 0h1m-3 8v-4h2v4"/>',
+    title: 'Un indirizzo con il nome della tua azienda',
+    detail: 'Il piano con sottodominio è riservato alle imprese verificate che dimostrano di controllare il proprio dominio.',
+  },
+  {
+    icon: '<path d="M12 22s7-3.5 7-10V6l-7-3-7 3v6c0 6.5 7 10 7 10Z"/><path d="m9 12 2 2 4-4"/>',
+    title: 'Nessun tracciamento dei clic',
+    detail: 'Non teniamo uno storico delle aperture per fare statistiche e non profiliamo chi apre i link.',
+  },
 ];
 
 export const home = `<section class="hero">
@@ -98,8 +110,17 @@ export const home = `<section class="hero">
     </div>
   </div>
 </section>
-<section class="wrap section">
-  <div class="benefits">${benefits.map(([icon, title, detail]) => `<article><span class="feature-icon" aria-hidden="true">${icon}</span><h2>${title}</h2><p>${detail}</p></article>`).join('')}</div>
+<section class="wrap section principles" aria-labelledby="principles-title">
+  <div class="principles-intro">
+    <h2 id="principles-title">Un link che fa il suo lavoro</h2>
+    <p>Chi apre il link arriva alla pagina giusta. Tu puoi concentrarti su quello che vuoi condividere.</p>
+  </div>
+  <div class="benefits">
+    ${benefits.map(({ icon, title, detail }) => `<article>
+      <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false">${icon}</svg></span>
+      <div><h3>${title}</h3><p>${detail}</p></div>
+    </article>`).join('')}
+  </div>
 </section>
 <section class="soft"><div class="wrap section split">
   <div><h2>Due domini, due usi.</h2><p>Scegli il piano in base a come userai il link.</p></div>
@@ -145,5 +166,7 @@ export const demo = `<section class="wrap section demo-page">
 </section>`;
 
 export const privacy = apiEnabled => `<section class="wrap section narrow">
-  <h1>Privacy</h1><p>L’indirizzo che inserisci nella demo resta nel tuo browser. ${apiEnabled ? 'Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.' : 'Le iscrizioni non sono ancora aperte.'}</p>
+  <h1>Privacy</h1>
+  <p>L’indirizzo che inserisci nella demo resta nel tuo browser. ${apiEnabled ? 'Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.' : 'Le iscrizioni non sono ancora aperte.'}</p>
+  ${apiEnabled ? '' : `<p>Questo sito è ospitato su GitHub Pages. GitHub registra gli indirizzi IP dei visitatori per motivi di sicurezza. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">Scopri come GitHub Pages raccoglie i dati</a>.</p>`}
 </section>`;
