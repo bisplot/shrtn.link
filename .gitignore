@@ -1,0 +1,18 @@
+node_modules/
+dist/
+health-report.json
+.DS_Store
+*.log
+
+# Impostazioni locali di Claude Code (permessi specifici della macchina)
+.claude/settings.local.json
+
+# Documenti legali interni: non devono finire in un repository pubblico.
+# Contengono l'analisi dei rischi, il registro dei trattamenti e le procedure operative.
+docs/legal/interno/
+
+# Bozze legali non ancora rivedute da un avvocato e analisi economica interna:
+# restano in locale finché non sono pronte per la pubblicazione.
+docs/legal/
+docs/economics.md
+docs/*.xlsx
