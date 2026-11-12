@@ -228,6 +228,14 @@ details button { margin-top: 14px; }
 
 form > label:not(.check) { display: block; font-weight: 600; font-size: .9rem; margin: 0 0 6px; }
 input:not([type='checkbox']) { width: 100%; min-height: 44px; border: 1px solid #aebccd; border-radius: 6px; padding: 9px 12px; color: var(--ink); background: white; }
+.demo-notice {
+  padding: 12px 14px;
+  border-inline-start: 3px solid var(--green);
+  border-radius: 4px;
+  background: var(--soft);
+  color: var(--ink);
+}
+.demo-notice strong { font-weight: 600; }
 .demo-card .button { margin-top: 8px; }
 .demo-card p { margin: 12px 0 0; }
 .demo-result { background: var(--soft); margin-top: 18px; padding: 14px; border-radius: 6px; }

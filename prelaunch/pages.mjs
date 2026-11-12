@@ -167,7 +167,7 @@ export const pricing = `<section class="wrap section">
 </section>`;
 
 export const demo = `<section class="wrap section demo-page">
-  <div><p class="eyebrow">Demo</p><h1>Prova un link breve.</h1><p>Incolla un indirizzo per vedere un esempio di link gratuito senza account. Il link di prova non è attivo e l’indirizzo che inserisci resta nel browser.</p><a href="/pricing/">Confronta i piani →</a></div>
+  <div><p class="eyebrow">Demo</p><h1>Prova un link breve.</h1><p>Incolla un indirizzo per vedere un esempio di link gratuito senza account.</p><p class="demo-notice"><strong>Il link di prova non è attivo e l’indirizzo che inserisci resta nel browser.</strong></p><a href="/pricing/">Confronta i piani →</a></div>
   <form id="demo-form" class="demo-card" method="post">
     <label for="url">Indirizzo di destinazione</label>
     <input id="url" type="url" required maxlength="2048" placeholder="https://esempio.it/menu" autocomplete="off">
