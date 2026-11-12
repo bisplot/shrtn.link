@@ -92,9 +92,10 @@ document.querySelectorAll('[data-interest]').forEach(button => {
       signin: 'L’area account sarà disponibile al lancio.',
       'premium-unverified': 'Il piano Premium senza verifica non è ancora in vendita.',
     }[intent];
-    signup.reset();
-    signupStatus.textContent = '';
+    signup?.reset();
+    if (signupStatus) signupStatus.textContent = '';
     dialog.showModal();
+    if (!signup || !ping) return;
     signup.hidden = !privacyVersion;
     if (!privacyVersion) {
       request('/api/config').then(config => {
@@ -117,7 +118,7 @@ document.querySelectorAll('[data-interest]').forEach(button => {
 });
 
 dialog.addEventListener('close', () => trigger?.focus());
-signup.addEventListener('submit', async event => {
+signup?.addEventListener('submit', async event => {
   event.preventDefault();
   const button = signup.querySelector('[type=submit]');
   button.disabled = true;
@@ -142,7 +143,7 @@ signup.addEventListener('submit', async event => {
   }
 });
 
-ping.addEventListener('click', async () => {
+ping?.addEventListener('click', async () => {
   ping.disabled = true;
   pingStatus.textContent = 'Invio…';
   try {

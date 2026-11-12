@@ -25,7 +25,6 @@ const { validateRaw } = require('./validate-links');
 const REDIRECT_DELAY_MS = 250;   // deve restare allineato a 404.html
 
 const STATIC_ENTRIES = [
-  '404.html',
   'links.json',
   'robots.txt',
   '.nojekyll',
@@ -79,6 +78,7 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--out') options.out = argv[++i];
     else if (argv[i] === '--site') options.site = argv[++i];
+    else if (argv[i] === '--pages') options.pages = true;
     else {
       console.error(`Argomento non riconosciuto: ${argv[i]}`);
       process.exit(1);
@@ -220,11 +220,20 @@ document.addEventListener('DOMContentLoaded', function () {
 // Build
 // ---------------------------------------------------------------------------
 
+function prefixPaths(html, basePath) {
+  if (!basePath) return html;
+  return html.replace(/\b(href|src|action)="\/(?!\/)/g, (_, attribute) => `${attribute}="${basePath}/`);
+}
+
 async function main(argv) {
   const options = parseArgs(argv);
   const root = __dirname;
   const outDir = path.resolve(root, options.out);
   const linksFile = path.join(root, 'links.json');
+  const basePath = new URL(options.site).pathname.replace(/\/+$/, '');
+  const fallback = fs.readFileSync(path.join(root, '404.html'), 'utf8');
+  const buildFallback = prefixPaths(fallback, basePath)
+    .replace('<html lang="it">', `<html lang="it" data-base-path="${escapeHtml(basePath)}">`);
 
   const raw = fs.readFileSync(linksFile, 'utf8');
   const { errors, warnings, links } = validateRaw(raw);
@@ -253,18 +262,22 @@ async function main(argv) {
     fs.cpSync(source, path.join(outDir, name), { recursive: true });
   }
 
+  fs.writeFileSync(path.join(outDir, '404.html'), buildFallback);
+
   const { layout, home, pricing, demo, privacy } = await import('./prelaunch/pages.mjs');
   for (const [route, title, content] of [
     ['', 'Link brevi per aziende', home],
     ['pricing', 'Prezzi', pricing],
     ['crea', 'Prova un link', demo],
-    ['privacy', 'Privacy', privacy],
+    ['privacy', 'Privacy', privacy(!options.pages)],
   ]) {
     const pageDir = path.join(outDir, route);
     fs.mkdirSync(pageDir, { recursive: true });
-    fs.writeFileSync(path.join(pageDir, 'index.html'), layout(title, content, {
+    const page = layout(title, content, {
       path: route ? `/${route}/` : '/',
-    }));
+      apiEnabled: !options.pages,
+    });
+    fs.writeFileSync(path.join(pageDir, 'index.html'), prefixPaths(page, basePath));
   }
 
   const slugs = Object.keys(links);
@@ -277,7 +290,7 @@ async function main(argv) {
 
     const qrDir = path.join(slugDir, 'qr');
     fs.mkdirSync(qrDir, { recursive: true });
-    fs.writeFileSync(path.join(qrDir, 'index.html'), qrPage(slug, entry, options.site));
+    fs.writeFileSync(path.join(qrDir, 'index.html'), prefixPaths(qrPage(slug, entry, options.site), basePath));
   }
 
   console.log(

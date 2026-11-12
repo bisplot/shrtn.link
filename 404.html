@@ -90,7 +90,9 @@
 
   // Un percent-encoding malformato (/%E0%A4) farebbe eccezione: in quel caso
   // lo slug non può esistere comunque, quindi si ripiega sul path grezzo.
+  var basePath = document.documentElement.dataset.basePath || '';
   var pathname = location.pathname;
+  if (basePath && pathname.startsWith(basePath + '/')) pathname = pathname.slice(basePath.length);
   try { pathname = decodeURIComponent(pathname); } catch (e) { /* path non decodificabile */ }
 
   var rawPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
@@ -104,7 +106,7 @@
     return;
   }
 
-  fetch('/links.json', { cache: 'no-cache' })
+  fetch(basePath + '/links.json', { cache: 'no-cache' })
     .then(function (r) {
       if (!r.ok) throw new Error('links.json non raggiungibile');
       return r.json();
@@ -157,7 +159,7 @@
   }
 
   function renderQr(slug, entry) {
-    var target = location.origin + '/' + slug;
+    var target = location.origin + basePath + '/' + slug;
     document.getElementById('qr-target').textContent = target;
     document.getElementById('qr-open').href = entry.url;
     document.title = 'QR · ' + target;

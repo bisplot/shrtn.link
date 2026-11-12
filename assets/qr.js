@@ -16,7 +16,7 @@
 (function (global) {
   'use strict';
 
-  var LIB_URL = '/assets/qrcode.min.js';
+  var LIB_URL = new URL('qrcode.min.js', document.currentScript.src).href;
   var libPromise = null;
 
   function loadLib() {

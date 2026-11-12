@@ -5,6 +5,10 @@ pages, and the signup and ping API. The strategy, economic model and previous
 tracking templates live in
 [ten_m](https://github.com/bisplot/ten_m/tree/master/strategy/venture-building/shrtn).
 
+GitHub Actions publishes the static website to GitHub Pages from `main`. The
+Pages build includes the link demo and legacy routes. The signup and ping controls
+are enabled by the server build once the API is connected.
+
 Run `npm run validate` and `npm run build` with Node.js 20 or later. Serve the
 generated site and API together with Python 3.12:
 

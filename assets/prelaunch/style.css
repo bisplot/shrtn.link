@@ -1,12 +1,12 @@
 @font-face {
   font-family: Inter;
-  src: url('/assets/prelaunch/inter.woff2') format('woff2');
+  src: url('./inter.woff2') format('woff2');
   font-weight: 100 900;
   font-display: swap;
 }
 @font-face {
   font-family: 'IBM Plex Mono';
-  src: url('/assets/prelaunch/plex-mono.woff2') format('woff2');
+  src: url('./plex-mono.woff2') format('woff2');
   font-weight: 400;
   font-display: swap;
 }

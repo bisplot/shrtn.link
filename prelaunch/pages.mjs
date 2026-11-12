@@ -19,12 +19,12 @@ const notice = 'I link gratuiti non hanno garanzia di durata. Per link che devon
 
 const marketingCopy = 'Acconsento a ricevere via email novità e promozioni da Bisplot su prodotti, servizi, eventi e iniziative che Bisplot organizza o promuove.';
 const formVersion = '2026-11-11-v1';
-function interestDialog() {
+function interestDialog(apiEnabled) {
   return `<dialog id="interest" aria-labelledby="interest-title">
     <form method="dialog" class="close"><button aria-label="Chiudi">×</button></form>
     <h2 id="interest-title">Ci hai beccati in anticipo.</h2>
     <p id="interest-context"></p>
-    <p>Stiamo lavorando a Shrtn. Vuoi sapere quando è pronto? Oppure mandaci un ping per farci accelerare.</p>
+    ${apiEnabled ? `<p>Stiamo lavorando a Shrtn. Vuoi sapere quando è pronto? Oppure mandaci un ping per farci accelerare.</p>
     <p id="signup-unavailable" class="fine">Le iscrizioni apriranno a breve.</p>
     <form id="signup" method="post" action="/api/subscribe" data-version="${formVersion}" hidden>
       <label for="email">Email</label>
@@ -37,11 +37,11 @@ function interestDialog() {
     <div class="ping">
       <button class="button outline" type="button" id="ping">Manda un ping</button>
       <p class="status fine" id="ping-status" role="status"></p>
-    </div>
+    </div>` : '<p>Stiamo lavorando a Shrtn. Le iscrizioni apriranno a breve.</p>'}
   </dialog>`;
 }
 
-export function layout(title, body, { path }) {
+export function layout(title, body, { path, apiEnabled }) {
   const current = href => path === href ? ' aria-current="page"' : '';
   return `<!doctype html>
 <html lang="it">
@@ -68,7 +68,7 @@ export function layout(title, body, { path }) {
 <footer><div class="wrap bar">${logo}<p>Link brevi per ciò che stampi.</p>
   <nav aria-label="Menu nel piè di pagina"><a href="/pricing/">Prezzi</a><a href="/privacy/">Privacy</a></nav>
 </div></footer>
-${interestDialog()}
+${interestDialog(apiEnabled)}
 </body>
 </html>`;
 }
@@ -144,6 +144,6 @@ export const demo = `<section class="wrap section demo-page">
   </form>
 </section>`;
 
-export const privacy = `<section class="wrap section narrow">
-  <h1>Privacy</h1><p>La demo elabora nel browser l’indirizzo che inserisci. Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.</p>
+export const privacy = apiEnabled => `<section class="wrap section narrow">
+  <h1>Privacy</h1><p>La demo elabora nel browser l’indirizzo che inserisci. ${apiEnabled ? 'Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.' : 'Le iscrizioni non sono ancora aperte.'}</p>
 </section>`;
