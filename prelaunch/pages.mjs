@@ -1,3 +1,5 @@
+import { linkFlow } from './flow.mjs';
+
 export const plans = [
   { id: 'free', name: 'Free', domain: 'shrtnfree.link', price: '0 €',
     intro: 'Link gratuiti con account.',
@@ -127,6 +129,7 @@ export const home = `<section class="hero">
   <dl class="domains"><div><dt class="mono">shrtnfree.link</dt><dd>Link gratuiti, con destinazione fissa e senza garanzia di durata.</dd></div>
     <div><dt class="mono">shrtn.link</dt><dd>Link per imprese, con destinazione modificabile. Il piano con sottodominio include un indirizzo con il nome della tua azienda.</dd></div></dl>
 </div></section>
+${linkFlow}
 <section class="wrap section narrow center"><h2>Stai per andare in stampa?</h2><p>Confronta i piani prima di stampare i tuoi QR.</p><a class="button primary" href="/pricing/">Vedi i prezzi</a></section>`;
 
 export const pricing = `<section class="wrap section">
