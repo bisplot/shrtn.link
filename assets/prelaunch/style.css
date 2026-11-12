@@ -51,7 +51,8 @@ button:disabled { cursor: default; opacity: .65; }
 
 header { border-bottom: 1px solid var(--line); }
 .bar { display: flex; justify-content: space-between; align-items: center; min-height: 64px; gap: 16px; }
-.logo { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.logo { display: inline-flex; align-items: center; gap: 8px; color: #111; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.logo-suffix { color: var(--green); }
 .mark { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: var(--green); color: white; }
 nav { display: flex; align-items: center; gap: clamp(12px, 2.3vw, 28px); font-size: .875rem; }
 nav a, .nav-button { text-decoration: none; color: var(--muted); }

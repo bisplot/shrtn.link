@@ -14,7 +14,7 @@ export const plans = [
 ];
 
 const mark = '<span class="mark" aria-hidden="true">✓</span>';
-const logo = `<a class="logo" href="/" aria-label="Pagina iniziale di shrtn.link">${mark}<span>shrtn.link</span></a>`;
+const logo = `<a class="logo" href="/" aria-label="Pagina iniziale di Shrtn.link">${mark}<span>Shrtn<span class="logo-suffix">.link</span></span></a>`;
 const notice = 'I link gratuiti non hanno garanzia di durata. Per link che devono durare, Premium è disponibile per le imprese con partita IVA.';
 
 const marketingCopy = 'Acconsento a ricevere via email novità e promozioni da Bisplot su prodotti, servizi, eventi e iniziative che Bisplot organizza o promuove.';
