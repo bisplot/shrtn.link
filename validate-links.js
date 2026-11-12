@@ -21,7 +21,7 @@ const SLUG_RE = /^[A-Za-z0-9_-]{1,64}$/;
 
 /** Slug che collidono con file o directory reali del sito. */
 const RESERVED_SLUGS = new Set([
-  'assets', 'qr', 'index', '404', 'api', 'cname', 'dist', 'favicon',
+  'assets', 'brand', 'qr', 'index', '404', 'api', 'cname', 'dist', 'favicon',
   'links', 'node_modules', 'readme', 'robots', 'sitemap', 'well-known',
   'pricing', 'crea', 'privacy'
 ]);

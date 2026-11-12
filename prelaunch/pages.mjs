@@ -15,7 +15,7 @@ export const plans = [
     action: 'Scegli il piano con sottodominio' },
 ];
 
-const mark = '<span class="mark" aria-hidden="true">✓</span>';
+const mark = '<img class="mark" src="/brand/shrtn-symbol.svg" width="14" height="25" alt="">';
 const logo = `<a class="logo" href="/" aria-label="Pagina iniziale di Shrtn.link">${mark}<span>Shrtn<span class="logo-suffix">.link</span></span></a>`;
 const notice = 'I link gratuiti non hanno garanzia di durata. Per link che devono durare, Premium è disponibile per le imprese con partita IVA.';
 
@@ -52,7 +52,7 @@ export function layout(title, body, { path, apiEnabled }) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Link brevi per menu, etichette e packaging. Cambia la destinazione senza ristampare.">
 <title>${title} · Shrtn</title>
-<link rel="icon" href="/assets/prelaunch/mark.svg" type="image/svg+xml">
+<link rel="icon" href="/brand/shrtn-symbol.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/prelaunch/style.css">
 <script type="module" src="/assets/prelaunch/site.js"></script>
 </head>
@@ -130,7 +130,17 @@ export const home = `<section class="hero">
     <div><dt class="mono">shrtn.link</dt><dd>Link per imprese, con destinazione modificabile. Il piano con sottodominio include un indirizzo con il nome della tua azienda.</dd></div></dl>
 </div></section>
 ${linkFlow}
-<section class="wrap section narrow center"><h2>Stai per andare in stampa?</h2><p>Confronta i piani prima di stampare i tuoi QR.</p><a class="button primary" href="/pricing/">Vedi i prezzi</a></section>`;
+<section class="wrap customers" aria-labelledby="customers-title">
+  <h2 id="customers-title">Chi usa Shrtn.link</h2>
+  <ul class="customer-logos" role="list">
+    <li><img src="/assets/bisplot-logo.png" width="337" height="96" alt="Bisplot"></li>
+    <li><img src="/assets/customers/helioh2.png" width="284" height="240" alt="HelioH2"></li>
+    <li><img src="/assets/customers/pintore.png" width="626" height="114" alt="Pintore Editore"></li>
+    <li><img src="/assets/customers/negri.png" width="261" height="228" alt="Centro Servizi Negri"></li>
+    <li><span class="customer-name">Kopernik Srl</span></li>
+    <li><img src="/assets/customers/sailgroup.png" width="457" height="240" alt="SailGroup"></li>
+  </ul>
+</section>`;
 
 export const pricing = `<section class="wrap section">
   <div class="narrow center pricing-head">

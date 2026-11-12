@@ -28,7 +28,8 @@ const STATIC_ENTRIES = [
   'links.json',
   'robots.txt',
   '.nojekyll',
-  'assets'
+  'assets',
+  'brand'
 ];
 
 /* Copia ridotta di assets/style.css, incorporata nella pagina di redirect per
@@ -70,8 +71,7 @@ const jsString = (value) => JSON.stringify(String(value))
   .replace(/\u2028/g, '\\u2028')
   .replace(/\u2029/g, '\\u2029');
 
-const FAVICON = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>" +
-  "<text y='.9em' font-size='90'>🔗</text></svg>";
+const FAVICON = "/brand/shrtn-symbol.svg";
 
 function parseArgs(argv) {
   const options = { out: 'dist', site: process.env.SITE_URL || 'https://shrtn.link' };
@@ -128,7 +128,7 @@ ${image ? `<meta property="og:image" content="${escapeHtml(image)}">\n` : ''}<me
 ${image ? `<meta name="twitter:image" content="${escapeHtml(image)}">\n` : ''}
 <link rel="preconnect" href="${escapeHtml(destination.origin)}" crossorigin>
 <link rel="dns-prefetch" href="${escapeHtml(destination.origin)}">
-<link rel="icon" href="${FAVICON}">
+<link rel="icon" href="${FAVICON}" type="image/svg+xml">
 <style>${CRITICAL_CSS}</style>
 <noscript><meta http-equiv="refresh" content="0; url=${escapeHtml(url)}"></noscript>
 </head>
@@ -164,7 +164,7 @@ function qrPage(slug, entry, site) {
 <title>QR · shrtn.link/${escapeHtml(slug)}</title>
 <meta name="robots" content="noindex">
 <link rel="stylesheet" href="/assets/style.css">
-<link rel="icon" href="${FAVICON}">
+<link rel="icon" href="${FAVICON}" type="image/svg+xml">
 </head>
 <body>
 
@@ -286,7 +286,7 @@ async function main(argv) {
     const slugDir = path.join(outDir, slug);
 
     fs.mkdirSync(slugDir, { recursive: true });
-    fs.writeFileSync(path.join(slugDir, 'index.html'), redirectPage(slug, entry, options.site));
+    fs.writeFileSync(path.join(slugDir, 'index.html'), prefixPaths(redirectPage(slug, entry, options.site), basePath));
 
     const qrDir = path.join(slugDir, 'qr');
     fs.mkdirSync(qrDir, { recursive: true });

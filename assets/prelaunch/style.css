@@ -53,7 +53,7 @@ header { border-bottom: 1px solid var(--line); }
 .bar { display: flex; justify-content: space-between; align-items: center; min-height: 64px; gap: 16px; }
 .logo { display: inline-flex; align-items: center; gap: 8px; color: #111; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .logo-suffix { color: var(--green); }
-.mark { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: var(--green); color: white; }
+.mark { flex: none; display: block; width: 14px; height: 25px; }
 nav { display: flex; align-items: center; gap: clamp(12px, 2.3vw, 28px); font-size: .875rem; }
 nav a, .nav-button { text-decoration: none; color: var(--muted); }
 nav a:hover, nav [aria-current='page'] { color: var(--ink); text-decoration: underline; }
@@ -169,6 +169,34 @@ footer .bar { min-height: 98px; flex-wrap: wrap; padding-block: 18px; }
 }
 @media (max-width: 375px) {
   .flow-copy p { font-size: .84rem; }
+}
+
+.customers {
+  padding-block: clamp(28px, 5vw, 56px);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.customers h2 { font-size: 1.125rem; letter-spacing: -.025em; }
+.customer-logos {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.customer-logos li { display: grid; min-height: 64px; place-items: center; }
+.customer-logos img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 134px);
+  max-height: 55px;
+  filter: brightness(0) invert(.35);
+}
+.customer-name { color: #595959; font-size: .95rem; font-weight: 600; }
+@media (max-width: 740px) {
+  .customer-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 }
 
 .pricing-head { margin-bottom: 36px; }
