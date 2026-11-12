@@ -1,20 +1,20 @@
 export const plans = [
   { id: 'free', name: 'Free', domain: 'shrtnfree.link', price: '0 €',
     intro: 'Link gratuiti con account.',
-    items: ['Codice breve assegnato da Shrtn', 'QR standard in PNG e SVG', 'Destinazione fissa e anteprima di 5 secondi', 'Nessuna garanzia di durata'],
+    items: ['Codice breve generato automaticamente', 'QR standard in PNG e SVG', 'Destinazione fissa e attesa di 5 secondi', 'Nessuna garanzia di durata'],
     action: 'Crea un account Free' },
   { id: 'premium', name: 'Premium', domain: 'shrtn.link', monthly: '6,99', yearly: '69,99',
     intro: 'Per imprese con profilo verificato.',
-    items: ['Destinazione modificabile', 'QR standard in PNG e SVG', 'Reindirizzamento immediato', 'Pausa, riattivazione e ritiro dei link'],
+    items: ['Destinazione modificabile', 'QR standard in PNG e SVG', 'Reindirizzamento immediato', 'Puoi mettere in pausa, riattivare o ritirare i link'],
     action: 'Abbonati a Premium' },
   { id: 'subdomain', name: 'Premium con sottodominio', domain: 'tuaazienda.shrtn.link', monthly: '29,99', yearly: '299,99',
-    intro: 'Per imprese verificate con un proprio dominio.',
-    items: ['Tutte le funzioni di Premium', 'Percorsi a scelta sotto il nome aziendale', 'QR personalizzabile e pagina dei link del brand', 'Documenti societari e verifica del dominio'],
-    action: 'Abbonati con sottodominio' },
+    intro: 'Per imprese verificate con un dominio proprio.',
+    items: ['Tutte le funzioni di Premium', 'Percorsi personalizzati sul tuo sottodominio', 'QR personalizzabile e pagina con i link aziendali', 'Documenti societari e verifica del dominio'],
+    action: 'Scegli il piano con sottodominio' },
 ];
 
 const mark = '<span class="mark" aria-hidden="true">✓</span>';
-const logo = `<a class="logo" href="/" aria-label="Shrtn, home">${mark}Shrtn</a>`;
+const logo = `<a class="logo" href="/" aria-label="Pagina iniziale di shrtn.link">${mark}<span>shrtn.link</span></a>`;
 const notice = 'I link gratuiti non hanno garanzia di durata. Per link che devono durare, Premium è disponibile per le imprese con partita IVA.';
 
 const marketingCopy = 'Acconsento a ricevere via email novità e promozioni da Bisplot su prodotti, servizi, eventi e iniziative che Bisplot organizza o promuove.';
@@ -37,7 +37,7 @@ function interestDialog(apiEnabled) {
     <div class="ping">
       <button class="button outline" type="button" id="ping">Manda un ping</button>
       <p class="status fine" id="ping-status" role="status"></p>
-    </div>` : '<p>Stiamo lavorando a Shrtn. Le iscrizioni apriranno a breve.</p>'}
+    </div>` : '<p>Stiamo lavorando a shrtn.link. Le iscrizioni apriranno a breve.</p>'}
   </dialog>`;
 }
 
@@ -65,7 +65,7 @@ export function layout(title, body, { path, apiEnabled }) {
   </nav>
 </div></header>
 <main id="main">${body}</main>
-<footer><div class="wrap bar">${logo}<p>Link brevi per ciò che stampi.</p>
+<footer><div class="wrap bar"><div class="footer-brand">${logo}<p>Un prodotto di Bisplot</p></div>
   <nav aria-label="Menu nel piè di pagina"><a href="/pricing/">Prezzi</a><a href="/privacy/">Privacy</a></nav>
 </div></footer>
 ${interestDialog(apiEnabled)}
@@ -74,17 +74,17 @@ ${interestDialog(apiEnabled)}
 }
 
 const benefits = [
-  ['⤴', 'Pensato per ciò che stampi', 'Menu, volantini, etichette e packaging. Con Premium cambi la destinazione senza ristampare il QR.'],
+  ['⤴', 'Pensato per la stampa', 'Menu, volantini, etichette e packaging. Con Premium cambi la destinazione senza ristampare il QR.'],
   ['✓', 'Il nome della tua azienda', 'Il sottodominio è riservato alle imprese verificate che dimostrano il controllo del proprio dominio.'],
-  ['⊘', 'Nessuna analitica dei clic', 'Shrtn non offre statistiche ai clienti e non profila i visitatori.'],
+  ['⊘', 'Nessuna statistica sui clic', 'Non mostriamo statistiche sui clic e non profiliamo i visitatori.'],
 ];
 
 export const home = `<section class="hero">
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow">Link brevi per aziende</p>
-      <h1>Stampalo una volta.<br>Aggiornalo quando serve.</h1>
-      <p class="lead">Il QR sul menu, sull’etichetta o sul cartello resta lo stesso. Con Shrtn Premium puoi cambiare la pagina che si apre dopo la scansione.</p>
+      <h1>Stampa il QR una volta.<br>Cambia la destinazione quando serve.</h1>
+      <p class="lead">Con Premium puoi cambiare la pagina a cui punta il QR sul menu, sull’etichetta o sul cartello già stampato.</p>
       <div class="actions"><a class="button green" href="/pricing/">Scopri i piani <span aria-hidden="true">→</span></a><a class="button ghost" href="/crea/">Prova la demo</a></div>
     </div>
     <div class="example">
@@ -102,16 +102,16 @@ export const home = `<section class="hero">
   <div class="benefits">${benefits.map(([icon, title, detail]) => `<article><span class="feature-icon" aria-hidden="true">${icon}</span><h2>${title}</h2><p>${detail}</p></article>`).join('')}</div>
 </section>
 <section class="soft"><div class="wrap section split">
-  <div><h2>Due domini, due usi.</h2><p>Un link da condividere oggi e un QR da stampare su centinaia di confezioni rispondono a esigenze diverse.</p></div>
+  <div><h2>Due domini, due usi.</h2><p>Scegli il piano in base a come userai il link.</p></div>
   <dl class="domains"><div><dt class="mono">shrtnfree.link</dt><dd>Link gratuiti, con destinazione fissa e senza garanzia di durata.</dd></div>
-    <div><dt class="mono">shrtn.link</dt><dd>Link per imprese, con destinazione modificabile. Un indirizzo con il nome dell’azienda è disponibile con il piano con sottodominio.</dd></div></dl>
+    <div><dt class="mono">shrtn.link</dt><dd>Link per imprese, con destinazione modificabile. Il piano con sottodominio include un indirizzo con il nome della tua azienda.</dd></div></dl>
 </div></section>
-<section class="wrap section narrow center"><h2>Il tuo prossimo QR</h2><p>Confronta i piani prima di mandare in stampa.</p><a class="button primary" href="/pricing/">Vedi i prezzi</a></section>`;
+<section class="wrap section narrow center"><h2>Stai per andare in stampa?</h2><p>Confronta i piani prima di stampare i tuoi QR.</p><a class="button primary" href="/pricing/">Vedi i prezzi</a></section>`;
 
 export const pricing = `<section class="wrap section">
   <div class="narrow center pricing-head">
     <h1>Un piano per ogni link.</h1>
-    <p>Free per condividere un indirizzo. Premium per le imprese che vogliono poter cambiare la destinazione anche dopo la stampa.</p>
+    <p>Con Free condividi un link a destinazione fissa. Con Premium la tua impresa può cambiare la destinazione anche dopo la stampa.</p>
     <div class="toggle" role="group" aria-label="Fatturazione"><button type="button" data-period="monthly" aria-pressed="true">Mensile</button><button type="button" data-period="yearly" aria-pressed="false">Annuale</button></div>
   </div>
   <div class="plans">
@@ -125,25 +125,25 @@ export const pricing = `<section class="wrap section">
     </article>`).join('')}
   </div>
   <div class="pricing-notes narrow">
-    <p>Vuoi provare senza account? <a href="/crea/">Apri la demo</a>. Il servizio anonimo usa <code>nofollow.shrtnfree.link</code> e genera solo link testuali.</p>
-    <details><summary>Premium senza verifica del profilo</summary><p>Con un identificativo d’impresa puoi scegliere Premium senza completare la verifica del profilo a <strong>17,99 € al mese</strong> o <strong>179,99 € all’anno</strong>, IVA esclusa. La verifica consente di accedere al prezzo ridotto.</p><button class="button outline" type="button" data-interest="premium-unverified">Abbonati senza verifica</button></details>
+    <p>Vuoi provare senza account? <a href="/crea/">Apri la demo</a>. Il piano senza account prevede link su <code>nofollow.shrtnfree.link</code>. I codici QR sono disponibili con un account.</p>
+    <details><summary>Premium senza verifica del profilo</summary><p>Se hai un identificativo d’impresa, puoi attivare Premium prima di completare la verifica del profilo. Il prezzo è di <strong>17,99 € al mese</strong> o <strong>179,99 € all’anno</strong>, IVA esclusa. Con un profilo verificato accedi al prezzo ridotto.</p><button class="button outline" type="button" data-interest="premium-unverified">Abbonati senza verifica</button></details>
     <details><summary>Quanto dura un link dopo la disdetta?</summary><p>I link Premium su <code>shrtn.link</code> restano attivi e non modificabili per almeno dodici mesi, con 90 giorni di preavviso prima della disattivazione. I percorsi sul sottodominio aziendale restano attivi per 30 giorni dalla fine del piano.</p></details>
-    <details><summary>Che differenza c’è fra Free e Premium?</summary><p>I link Free mostrano la destinazione su una pagina di passaggio di cinque secondi. La destinazione è fissa. Premium permette di modificarla e offre il reindirizzamento immediato.</p></details>
+    <details><summary>Che differenza c’è fra Free e Premium?</summary><p>Prima del reindirizzamento, i link Free mostrano la destinazione per cinque secondi. La destinazione è fissa. Premium permette di modificarla e offre il reindirizzamento immediato.</p></details>
   </div>
 </section>`;
 
 export const demo = `<section class="wrap section demo-page">
-  <div><p class="eyebrow">Demo</p><h1>Prova un link breve.</h1><p>Incolla un indirizzo per vedere come apparirebbe un link gratuito senza account. La demo non crea un reindirizzamento e l’indirizzo rimane nel browser.</p><a href="/pricing/">Confronta i piani →</a></div>
+  <div><p class="eyebrow">Demo</p><h1>Prova un link breve.</h1><p>Incolla un indirizzo per vedere un esempio di link gratuito senza account. Il link di prova non è attivo e l’indirizzo che inserisci resta nel browser.</p><a href="/pricing/">Confronta i piani →</a></div>
   <form id="demo-form" class="demo-card" method="post">
     <label for="url">Indirizzo di destinazione</label>
     <input id="url" type="url" required maxlength="2048" placeholder="https://esempio.it/menu" autocomplete="off">
     <p class="fine">${notice}</p>
     <button type="submit" class="button primary">Genera link demo <span aria-hidden="true">→</span></button>
-    <div class="demo-result" id="demo-result" hidden><p>Link demo · non attivo</p><output class="mono" id="demo-link"></output><button class="button outline" id="copy" type="button">Copia esempio</button></div>
+    <div class="demo-result" id="demo-result" hidden><p>Link demo · non attivo</p><output class="mono" id="demo-link"></output><button class="button outline" id="copy" type="button">Copia il link demo</button></div>
     <p class="status fine" id="demo-status" role="status"></p>
   </form>
 </section>`;
 
 export const privacy = apiEnabled => `<section class="wrap section narrow">
-  <h1>Privacy</h1><p>La demo elabora nel browser l’indirizzo che inserisci. ${apiEnabled ? 'Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.' : 'Le iscrizioni non sono ancora aperte.'}</p>
+  <h1>Privacy</h1><p>L’indirizzo che inserisci nella demo resta nel tuo browser. ${apiEnabled ? 'Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.' : 'Le iscrizioni non sono ancora aperte.'}</p>
 </section>`;

@@ -190,7 +190,7 @@ function qrPage(slug, entry, site) {
 </main>
 
 <footer>
-  <a href="/">shrtn.link</a> · nessun tracking
+  <a href="/">shrtn.link</a> · Un prodotto di Bisplot
 </footer>
 
 <script src="/assets/qr.js" defer></script>
