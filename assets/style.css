@@ -242,3 +242,21 @@ footer {
 }
 
 [hidden] { display: none !important; }
+
+.bisplot-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: middle;
+}
+
+.bisplot-credit img { width: auto; height: 17px; }
+
+@media (prefers-color-scheme: dark) {
+  .bisplot-credit img {
+    box-sizing: content-box;
+    background: #fff;
+    border-radius: 3px;
+    padding: 2px 3px;
+  }
+}

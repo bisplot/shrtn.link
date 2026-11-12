@@ -190,7 +190,7 @@ function qrPage(slug, entry, site) {
 </main>
 
 <footer>
-  <a href="/">shrtn.link</a> · Un prodotto di Bisplot
+  <a href="/">shrtn.link</a> · <a class="bisplot-credit" href="https://bisplot.com/">Un prodotto di <img src="/assets/bisplot-logo.png" width="337" height="96" alt="Bisplot"></a>
 </footer>
 
 <script src="/assets/qr.js" defer></script>

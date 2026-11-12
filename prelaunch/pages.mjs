@@ -65,7 +65,7 @@ export function layout(title, body, { path, apiEnabled }) {
   </nav>
 </div></header>
 <main id="main">${body}</main>
-<footer><div class="wrap bar"><div class="footer-brand">${logo}<p>Un prodotto di Bisplot</p></div>
+<footer><div class="wrap bar"><div class="footer-brand">${logo}<p><a class="bisplot-credit" href="https://bisplot.com/">Un prodotto di <img src="/assets/bisplot-logo.png" width="337" height="96" alt="Bisplot"></a></p></div>
   <nav aria-label="Menu nel piè di pagina"><a href="/pricing/">Prezzi</a><a href="/privacy/">Privacy</a></nav>
 </div></footer>
 ${interestDialog(apiEnabled)}
