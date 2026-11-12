@@ -53,7 +53,7 @@ export function layout(title, body, { path, apiEnabled }) {
 <meta name="description" content="Link brevi per menu, etichette e packaging. Cambia la destinazione senza ristampare.">
 <title>${title} · Shrtn</title>
 <link rel="icon" href="/brand/shrtn-symbol.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/prelaunch/style.css">
+<link rel="stylesheet" href="/assets/prelaunch/style.css?v=eb6e395">
 <script type="module" src="/assets/prelaunch/site.js"></script>
 </head>
 <body>
