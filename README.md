@@ -16,6 +16,8 @@ Private. Not for distribution.
 - **Public launch is gated on compliance, not code**: Piracy Shield accreditation,
   lawyer review, PEC and mailboxes, two on-call people, IP assignment deeds, drills.
 - The live `shrtn.link` is still the static GitHub Pages site in `occhinog/shrtn`.
+- **Architecture drafted 12 November 2026** for both domains and every tier; decisions
+  pending with Davide and Matteo (`architecture.md` §11).
 
 ## At a glance
 
@@ -42,6 +44,7 @@ Prices are net of VAT. Paid plans are sold to businesses only.
 | [`strategy/shrtn-economic-model.xlsx`](strategy/shrtn-economic-model.xlsx) | Full workings behind the economic assessment |
 | [`strategy/legale.md`](strategy/legale.md) | Legal framework (in Italian), 11–12 October 2026 — feasibility, residual risks, Terms clauses, pre-launch priorities |
 | [`strategy/build-plan.md`](strategy/build-plan.md) | Phase 1 build plan, closed 15 October 2026 — architecture, work packages, manual tasks, launch gates |
+| [`strategy/architecture.md`](strategy/architecture.md) | Architecture draft, 12 November 2026 — hosts, stack, data, interfaces, flows, external systems, decisions for Davide and Matteo |
 
 `strategy.md` leads: where it has decided, the other documents explain how to comply
 or what it costs, without changing the decision.
@@ -53,6 +56,8 @@ or what it costs, without changing the decision.
   docs) are not in this repository. `interno` must stay out of git.
 - `build-plan.md` is closed: later changes go into dated step reports or a new
   document, not into the plan.
+- `architecture.md` supersedes `build-plan.md` §1–2 and the pre-October
+  `technical-brief-davide-matteo.md` in `occhinog/shrtn`.
 - Known follow-ups: `strategy.md` still shows QR on anonymous links and calls URLhaus a
   free source; the economic model lacks the second VPS and the `shrtnfree.link`
   renewal. See `build-plan.md` §8.
