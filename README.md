@@ -24,3 +24,10 @@ Email delivery and confirmation are separate. The web origin for writes is
 
 The Bisplot VPS stages releases within `/srv/shrtn`. Public hosting requires a
 reverse proxy and TLS configuration, and a DNS cutover from the current host.
+
+## Architecture
+
+[`docs/architecture.md`](docs/architecture.md) is the draft target architecture for
+`shrtn.link` and `shrtnfree.link`, every tier included (12 November 2026). Its §11
+lists the decisions for the session with Davide and Matteo; nothing in it is decided
+yet.
