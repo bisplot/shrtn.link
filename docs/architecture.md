@@ -7,6 +7,18 @@ decided before it. It supersedes `build-plan.md` §1–2 (architecture and repo 
 the pre-October `technical-brief-davide-matteo.md`. Phasing, work packages, manual
 tasks and launch gates stay in `build-plan.md`.
 
+The strategy documents cited here (`strategy.md`, `economics.md`, `legale.md`,
+`build-plan.md`) live in `bisplot/ten_m` under
+`strategy/venture-building/shrtn/strategy/`. The internal compliance documents
+(`registro-trattamenti.md`, the scoring spec, the compliance guide) stay outside git.
+
+**Starting point.** This repository already holds the pre-launch site: static pages
+built with Node (`build.js`, `validate-links.js`), the four legacy links in
+`links.json`, and a standard-library Python API (`apps/api/server.py`, signup and
+ping on SQLite), staged on the Bisplot VPS under `/srv/shrtn`. That is the current
+state, not this target: §8 shows where the legacy routes and the signup flow land, and
+D2 and D9 decide where M and staging run.
+
 Phase markers: **1** anonymous Free, **2a** accounts and registered Free, **2b**
 Premium, **2c** Premium with subdomain.
 
@@ -266,7 +278,8 @@ shrtn/                 Django project
   urls_main.py  urls_desk.py  urls_free.py
 apps/
   core/          codes, URL rules, PSL, lists, caps, Web Risk client — no zone data   (1)
-  site/      M   home, create proxy, legal pages, reports, suggest, legacy routes     (1)
+  site/      M   home, create proxy, legal pages, reports, suggest, legacy routes,
+                 pre-launch signup (replaces apps/api/server.py)                     (1)
   desk/      M   abuse desk, kill switch, registro, Piracy Shield, notices            (1)
   free/      F   redirector, transition page, internal API, daily check              (1)
   accounts/  M   sign-in, profiles, verification                                     (2a, 2b)
@@ -276,7 +289,7 @@ apps/
 templates/  static/  locale/
 tests/
 infra/           caddy/ · systemd/ · litestream/ · provision/ · deploy/
-strategy/
+docs/            this document; strategy stays in ten_m
 ```
 
 `settings.free` installs only `core` and `free`. A test fails the build if anything
