@@ -70,7 +70,7 @@ async function request(path, data) {
   const options = data ? {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data),
   } : {};
-  const response = await fetch(path, options);
+  const response = await fetch(`${dialog.dataset.apiOrigin ?? ''}${path}`, options);
   const body = await response.json();
   if (!response.ok) throw new Error(body.error ?? 'Riprova tra poco.');
   return body;
@@ -110,6 +110,7 @@ document.querySelectorAll('[data-interest]').forEach(button => {
     pingStatus.textContent = '';
     try {
       const { count } = await request('/api/ping');
+      ping.closest('.ping').hidden = false;
       if (!pingSent && !ping.disabled) displayPings(count);
     } catch {
       if (!pingSent && !ping.disabled) pingStatus.textContent = 'Conteggio al momento non disponibile.';

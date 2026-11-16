@@ -269,13 +269,13 @@ async function main(argv) {
     ['', 'Link brevi per aziende', home],
     ['pricing', 'Prezzi', pricing],
     ['crea', 'Prova un link', demo],
-    ['privacy', 'Privacy', privacy(!options.pages)],
+    ['privacy', 'Privacy', privacy(options.pages)],
   ]) {
     const pageDir = path.join(outDir, route);
     fs.mkdirSync(pageDir, { recursive: true });
     const page = layout(title, content, {
       path: route ? `/${route}/` : '/',
-      apiEnabled: !options.pages,
+      apiOrigin: options.pages ? 'https://api.shrtn.link' : '',
     });
     fs.writeFileSync(path.join(pageDir, 'index.html'), prefixPaths(page, basePath));
   }

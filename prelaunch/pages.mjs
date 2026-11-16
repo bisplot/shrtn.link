@@ -21,14 +21,14 @@ const notice = 'I link gratuiti non hanno garanzia di durata. Per link che devon
 
 const marketingCopy = 'Acconsento a ricevere via email novità e promozioni da Bisplot su prodotti, servizi, eventi e iniziative che Bisplot organizza o promuove.';
 const formVersion = '2026-11-11-v1';
-function interestDialog(apiEnabled) {
-  return `<dialog id="interest" aria-labelledby="interest-title">
+function interestDialog(apiOrigin) {
+  return `<dialog id="interest" aria-labelledby="interest-title" data-api-origin="${apiOrigin}">
     <form method="dialog" class="close"><button aria-label="Chiudi">×</button></form>
     <h2 id="interest-title">Ci hai beccati in anticipo.</h2>
     <p id="interest-context"></p>
-    ${apiEnabled ? `<p>Stiamo lavorando a Shrtn. Vuoi sapere quando è pronto? Oppure mandaci un ping per farci accelerare.</p>
+    <p>Stiamo lavorando a Shrtn.</p>
     <p id="signup-unavailable" class="fine">Le iscrizioni apriranno a breve.</p>
-    <form id="signup" method="post" action="/api/subscribe" data-version="${formVersion}" hidden>
+    <form id="signup" method="post" action="${apiOrigin}/api/subscribe" data-version="${formVersion}" hidden>
       <label for="email">Email</label>
       <input id="email" type="email" name="email" placeholder="tu@azienda.it" required maxlength="254" autocomplete="email">
       <label class="check"><input type="checkbox" name="privacy" required><span>Ho letto l’<a id="notice-link" href="/privacy/" target="_blank" rel="noopener">informativa privacy</a>.</span></label>
@@ -36,14 +36,14 @@ function interestDialog(apiEnabled) {
       <button class="button primary" type="submit">Avvisami al lancio</button>
       <p class="status" id="signup-status" role="status"></p>
     </form>
-    <div class="ping">
+    <div class="ping" hidden>
       <button class="button outline" type="button" id="ping">Manda un ping</button>
       <p class="status fine" id="ping-status" role="status"></p>
-    </div>` : '<p>Stiamo lavorando a shrtn.link. Le iscrizioni apriranno a breve.</p>'}
+    </div>
   </dialog>`;
 }
 
-export function layout(title, body, { path, apiEnabled }) {
+export function layout(title, body, { path, apiOrigin }) {
   const current = href => path === href ? ' aria-current="page"' : '';
   return `<!doctype html>
 <html lang="it">
@@ -54,7 +54,7 @@ export function layout(title, body, { path, apiEnabled }) {
 <title>${title} · Shrtn</title>
 <link rel="icon" href="/brand/shrtn-symbol.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/prelaunch/style.css?v=eb6e395">
-<script type="module" src="/assets/prelaunch/site.js"></script>
+<script type="module" src="/assets/prelaunch/site.js?v=prelaunch-api"></script>
 </head>
 <body>
 <a class="skip" href="#main">Vai al contenuto</a>
@@ -70,7 +70,7 @@ export function layout(title, body, { path, apiEnabled }) {
 <footer><div class="wrap bar"><div class="footer-brand">${logo}<p><a class="bisplot-credit" href="https://bisplot.com/">Un prodotto di <img src="/assets/bisplot-logo.png" width="337" height="96" alt="Bisplot"></a></p></div>
   <nav aria-label="Menu nel piè di pagina"><a href="/pricing/">Prezzi</a><a href="/privacy/">Privacy</a></nav>
 </div></footer>
-${interestDialog(apiEnabled)}
+${interestDialog(apiOrigin)}
 </body>
 </html>`;
 }
@@ -178,8 +178,8 @@ export const demo = `<section class="wrap section demo-page">
   </form>
 </section>`;
 
-export const privacy = apiEnabled => `<section class="wrap section narrow">
+export const privacy = pages => `<section class="wrap section narrow">
   <h1>Privacy</h1>
-  <p>L’indirizzo che inserisci nella demo resta nel tuo browser. ${apiEnabled ? 'Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.' : 'Le iscrizioni non sono ancora aperte.'}</p>
-  ${apiEnabled ? '' : `<p>Questo sito è ospitato su GitHub Pages. GitHub registra gli indirizzi IP dei visitatori per motivi di sicurezza. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">Scopri come GitHub Pages raccoglie i dati</a>.</p>`}
+  <p>L’indirizzo che inserisci nella demo resta nel tuo browser. Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.</p>
+  ${pages ? `<p>Questo sito è ospitato su GitHub Pages. GitHub registra gli indirizzi IP dei visitatori per motivi di sicurezza. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">Scopri come GitHub Pages raccoglie i dati</a>.</p>` : ''}
 </section>`;
