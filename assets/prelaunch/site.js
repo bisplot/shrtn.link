@@ -157,3 +157,29 @@ ping?.addEventListener('click', async () => {
     pingStatus.textContent = error.message;
   }
 });
+
+const languageSwitch = document.querySelector('.lang-switch');
+if (languageSwitch) {
+  const blocks = { it: document.querySelector('#privacy-it'), en: document.querySelector('#privacy-en') };
+  const titles = { it: 'Informativa sulla privacy · Shrtn', en: 'Privacy notice · Shrtn' };
+  const select = (lang, push) => {
+    for (const [code, block] of Object.entries(blocks)) block.hidden = code !== lang;
+    languageSwitch.querySelectorAll('[data-lang]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.lang === lang));
+    });
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+    if (push) {
+      const url = new URL(location.href);
+      if (lang === 'en') url.searchParams.set('lang', 'en'); else url.searchParams.delete('lang');
+      history.replaceState(null, '', url);
+    }
+  };
+  languageSwitch.hidden = false;
+  languageSwitch.addEventListener('click', event => {
+    const button = event.target.closest('[data-lang]');
+    if (button) select(button.dataset.lang, true);
+  });
+  const requested = new URL(location.href).searchParams.get('lang');
+  select(requested === 'en' || (!requested && navigator.language?.toLowerCase().startsWith('en')) ? 'en' : 'it', false);
+}

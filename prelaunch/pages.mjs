@@ -54,8 +54,8 @@ export function layout(title, body, { path, apiOrigin, description = 'Link brevi
 <link rel="canonical" href="${site}${path}">
 <title>${title} · Shrtn</title>
 <link rel="icon" href="/brand/shrtn-symbol.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/prelaunch/style.css?v=privacy-v1">
-<script type="module" src="/assets/prelaunch/site.js?v=prelaunch-api"></script>
+<link rel="stylesheet" href="/assets/prelaunch/style.css?v=privacy-v2">
+<script type="module" src="/assets/prelaunch/site.js?v=privacy-v2"></script>
 </head>
 <body>
 <a class="skip" href="#main">Vai al contenuto</a>
