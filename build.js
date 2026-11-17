@@ -265,20 +265,28 @@ async function main(argv) {
   fs.writeFileSync(path.join(outDir, '404.html'), buildFallback);
 
   const { layout, home, pricing, demo, privacy } = await import('./prelaunch/pages.mjs');
-  for (const [route, title, content] of [
+  const siteUrl = options.site.replace(/\/$/, '');
+  const routes = [],
+    pageList = [
     ['', 'Link brevi per aziende', home],
     ['pricing', 'Prezzi', pricing],
     ['crea', 'Prova un link', demo],
-    ['privacy', 'Privacy', privacy(options.pages)],
-  ]) {
+    ['privacy', 'Informativa sulla privacy', privacy(), 'Come Shrtn tratta i dati personali: nessun cookie, nessuna analisi del traffico, email solo per gli avvisi di lancio.'],
+  ];
+  for (const [route, title, content, description] of pageList) {
+    routes.push(route ? `/${route}/` : '/');
     const pageDir = path.join(outDir, route);
     fs.mkdirSync(pageDir, { recursive: true });
     const page = layout(title, content, {
       path: route ? `/${route}/` : '/',
       apiOrigin: options.pages ? 'https://api.shrtn.link' : '',
+      site: siteUrl,
+      ...(description && { description }),
     });
     fs.writeFileSync(path.join(pageDir, 'index.html'), prefixPaths(page, basePath));
   }
+  fs.writeFileSync(path.join(outDir, 'sitemap.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes.map(route => `  <url><loc>${siteUrl}${route}</loc></url>`).join('\n')}\n</urlset>\n`);
 
   const slugs = Object.keys(links);
   for (const slug of slugs) {

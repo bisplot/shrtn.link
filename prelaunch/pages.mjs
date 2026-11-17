@@ -43,17 +43,18 @@ function interestDialog(apiOrigin) {
   </dialog>`;
 }
 
-export function layout(title, body, { path, apiOrigin }) {
+export function layout(title, body, { path, apiOrigin, description = 'Link brevi per menu, etichette e packaging. Cambia la destinazione senza ristampare.', site = 'https://shrtn.link' }) {
   const current = href => path === href ? ' aria-current="page"' : '';
   return `<!doctype html>
 <html lang="it">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Link brevi per menu, etichette e packaging. Cambia la destinazione senza ristampare.">
+<meta name="description" content="${description}">
+<link rel="canonical" href="${site}${path}">
 <title>${title} · Shrtn</title>
 <link rel="icon" href="/brand/shrtn-symbol.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/prelaunch/style.css?v=eb6e395">
+<link rel="stylesheet" href="/assets/prelaunch/style.css?v=privacy-v1">
 <script type="module" src="/assets/prelaunch/site.js?v=prelaunch-api"></script>
 </head>
 <body>
@@ -178,8 +179,4 @@ export const demo = `<section class="wrap section demo-page">
   </form>
 </section>`;
 
-export const privacy = pages => `<section class="wrap section narrow">
-  <h1>Privacy</h1>
-  <p>L’indirizzo che inserisci nella demo resta nel tuo browser. Quando le iscrizioni sono aperte, il modulo mostra l’informativa applicabile agli avvisi di lancio.</p>
-  ${pages ? `<p>Questo sito è ospitato su GitHub Pages. GitHub registra gli indirizzi IP dei visitatori per motivi di sicurezza. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">Scopri come GitHub Pages raccoglie i dati</a>.</p>` : ''}
-</section>`;
+export { privacy, PRIVACY_VERSION } from './privacy.mjs';

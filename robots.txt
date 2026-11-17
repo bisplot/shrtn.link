@@ -3,3 +3,5 @@ Allow: /
 
 # Le pagine QR non hanno valore per l'indicizzazione.
 Disallow: /*/qr/
+
+Sitemap: https://shrtn.link/sitemap.xml
