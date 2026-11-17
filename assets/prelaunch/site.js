@@ -1,10 +1,12 @@
+const t = JSON.parse(document.querySelector('#strings').textContent);
+const fill = (text, values) => text.replace(/\{(\w+)\}/g, (_, key) => values[key]);
 const destination = document.querySelector('#destination');
 if (destination) {
-  const menus = ['menu-estate.pdf', 'menu-autunno.pdf', 'menu-inverno.pdf'];
+  const menus = t.menus;
   let index = 0;
   document.querySelector('#update-destination').addEventListener('click', () => {
     index = (index + 1) % menus.length;
-    destination.textContent = `tuaazienda.example/${menus[index]}`;
+    destination.textContent = `${t.destinationPrefix}${menus[index]}`;
   });
   destination.setAttribute('aria-live', 'polite');
 }
@@ -16,8 +18,8 @@ document.querySelectorAll('[data-period]').forEach(button => {
       choice.setAttribute('aria-pressed', String(choice === button));
     });
     document.querySelectorAll('[data-monthly]').forEach(price => {
-      price.textContent = `${price.dataset[period]} €`;
-      price.nextElementSibling.textContent = period === 'monthly' ? 'al mese · IVA esclusa' : 'all’anno · IVA esclusa';
+      price.textContent = price.dataset[period];
+      price.nextElementSibling.textContent = price.dataset[`${period}Note`];
     });
   });
 });
@@ -36,21 +38,21 @@ if (demo) {
     const url = new URL(demo.querySelector('#url').value);
     if (!['https:', 'http:'].includes(url.protocol) || !url.hostname.includes('.') || url.username || url.password) {
       result.hidden = true;
-      status.textContent = 'Inserisci un indirizzo web pubblico che inizi con http:// o https://.';
+      status.textContent = t.demoInvalid;
       return;
     }
     const alphabet = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
     const code = Array.from(crypto.getRandomValues(new Uint8Array(7)), value => alphabet[value % 32]).join('');
     link.textContent = `nofollow.shrtnfree.link/${code}`;
     result.hidden = false;
-    status.textContent = 'Esempio generato. Il link non è attivo.';
+    status.textContent = t.demoGenerated;
   });
   document.querySelector('#copy').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(link.textContent);
-      status.textContent = 'Esempio copiato.';
+      status.textContent = t.demoCopied;
     } catch {
-      status.textContent = 'Puoi selezionare il link e copiarlo manualmente.';
+      status.textContent = t.demoCopyFailed;
     }
   });
 }
@@ -72,26 +74,20 @@ async function request(path, data) {
   } : {};
   const response = await fetch(`${dialog.dataset.apiOrigin ?? ''}${path}`, options);
   const body = await response.json();
-  if (!response.ok) throw new Error(body.error ?? 'Riprova tra poco.');
+  if (!response.ok) throw new Error(t.errors[response.status] ?? body.error ?? t.retry);
   return body;
 }
 
 function displayPings(count) {
-  const message = count === 1 ? '1 ping ricevuto.' : `${count.toLocaleString('it-IT')} ping ricevuti.`;
-  pingStatus.textContent = pingSent ? `Ping inviato! ${message}` : message;
+  const message = count === 1 ? t.pingOne : fill(t.pingMany, { n: count.toLocaleString(t.locale) });
+  pingStatus.textContent = pingSent ? fill(t.pingSent, { message }) : message;
 }
 
 document.querySelectorAll('[data-interest]').forEach(button => {
   button.addEventListener('click', async () => {
     trigger = button;
     intent = button.dataset.interest;
-    document.querySelector('#interest-context').textContent = {
-      free: 'L’account Free sarà disponibile al lancio.',
-      premium: 'Il piano Premium non è ancora in vendita.',
-      subdomain: 'Il piano con sottodominio non è ancora in vendita.',
-      signin: 'L’area account sarà disponibile al lancio.',
-      'premium-unverified': 'Il piano Premium senza verifica non è ancora in vendita.',
-    }[intent];
+    document.querySelector('#interest-context').textContent = t.intents[intent];
     signup?.reset();
     if (signupStatus) signupStatus.textContent = '';
     dialog.showModal();
@@ -101,7 +97,9 @@ document.querySelectorAll('[data-interest]').forEach(button => {
       request('/api/config').then(config => {
         if (!config.privacyVersion || !config.privacyUrl) return;
         privacyVersion = config.privacyVersion;
-        document.querySelector('#notice-link').href = config.privacyUrl;
+        const notice = new URL(config.privacyUrl);
+        if (document.documentElement.lang === 'en') notice.searchParams.set('lang', 'en');
+        document.querySelector('#notice-link').href = notice.href;
         document.querySelector('#signup-unavailable').hidden = true;
         signup.hidden = false;
       }).catch(() => {});
@@ -113,7 +111,7 @@ document.querySelectorAll('[data-interest]').forEach(button => {
       ping.closest('.ping').hidden = false;
       if (!pingSent && !ping.disabled) displayPings(count);
     } catch {
-      if (!pingSent && !ping.disabled) pingStatus.textContent = 'Conteggio al momento non disponibile.';
+      if (!pingSent && !ping.disabled) pingStatus.textContent = t.pingUnavailable;
     }
   });
 });
@@ -123,7 +121,7 @@ signup?.addEventListener('submit', async event => {
   event.preventDefault();
   const button = signup.querySelector('[type=submit]');
   button.disabled = true;
-  signupStatus.textContent = 'Salvataggio…';
+  signupStatus.textContent = t.saving;
   const currentIntent = intent;
   try {
     await request('/api/subscribe', {
@@ -136,7 +134,7 @@ signup?.addEventListener('submit', async event => {
     });
     if (!dialog.open || intent !== currentIntent) return;
     signup.reset();
-    signupStatus.textContent = 'Richiesta di avviso ricevuta.';
+    signupStatus.textContent = t.saved;
   } catch (error) {
     if (dialog.open && intent === currentIntent) signupStatus.textContent = error.message;
   } finally {
@@ -146,7 +144,7 @@ signup?.addEventListener('submit', async event => {
 
 ping?.addEventListener('click', async () => {
   ping.disabled = true;
-  pingStatus.textContent = 'Invio…';
+  pingStatus.textContent = t.sending;
   try {
     pingId ??= crypto.randomUUID();
     const { count } = await request('/api/ping', { id: pingId });
@@ -181,5 +179,5 @@ if (languageSwitch) {
     if (button) select(button.dataset.lang, true);
   });
   const requested = new URL(location.href).searchParams.get('lang');
-  select(requested === 'en' || (!requested && navigator.language?.toLowerCase().startsWith('en')) ? 'en' : 'it', false);
+  select(requested === 'en' || requested === 'it' ? requested : document.documentElement.lang === 'en' ? 'en' : 'it', false);
 }

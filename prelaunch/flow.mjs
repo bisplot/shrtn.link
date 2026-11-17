@@ -1,7 +1,20 @@
+const stepCopy = {
+  it: [
+    ['Copia l’indirizzo originale','Apri la pagina che vuoi condividere e copia il suo indirizzo.'],
+    ['Incollalo nel modulo','Inserisci l’indirizzo nel campo di Shrtn.link e genera il link breve.'],
+    ['Ottieni il link breve','Copia il nuovo link. Se hai un account, puoi anche scaricare il codice QR.'],
+    ['Condividilo o stampalo','Invia il link in chat o via email. Per un menu, un’etichetta o un cartello, scegli un QR Premium.'],
+  ],
+  en: [
+    ['Copy the original address','Open the page you want to share and copy its address.'],
+    ['Paste it into the form','Enter the address in the Shrtn.link field and generate the short link.'],
+    ['Get the short link','Copy the new link. With an account you can also download the QR code.'],
+    ['Share it or print it','Send the link in a chat or by email. For a menu, a label or a sign, choose a Premium QR.'],
+  ],
+};
+
 const steps = [
   {
-    title: 'Copia l’indirizzo originale',
-    detail: 'Apri la pagina che vuoi condividere e copia il suo indirizzo.',
     drawing: `
       <rect x="22" y="18" width="143" height="76" rx="8"/>
       <path d="M22 36h143"/>
@@ -14,8 +27,6 @@ const steps = [
       <path class="flow-accent" d="M159 80h11m-11 6h8"/>`,
   },
   {
-    title: 'Incollalo nel modulo',
-    detail: 'Inserisci l’indirizzo nel campo di Shrtn.link e genera il link breve.',
     drawing: `
       <rect x="20" y="37" width="160" height="59" rx="8"/>
       <rect class="flow-tint" x="32" y="53" width="136" height="21" rx="4"/>
@@ -27,8 +38,6 @@ const steps = [
       <path class="flow-accent" d="M100 43v10m-4-4 4 4 4-4"/>`,
   },
   {
-    title: 'Ottieni il link breve',
-    detail: 'Copia il nuovo link. Se hai un account, puoi anche scaricare il codice QR.',
     drawing: `
       <rect class="flow-tint" x="19" y="41" width="101" height="32" rx="16"/>
       <path class="flow-accent" d="m43 56 3-3a4 4 0 0 1 6 6l-3 3m-8-4-3 3a4 4 0 0 1-6-6l3-3m1 9 13-9M64 57h41"/>
@@ -43,8 +52,6 @@ const steps = [
       </g>`,
   },
   {
-    title: 'Condividilo o stampalo',
-    detail: 'Invia il link in chat o via email. Per un menu, un’etichetta o un cartello, scegli un QR Premium.',
     drawing: `
       <circle cx="58" cy="37" r="13"/>
       <path d="M38 94V76a20 20 0 0 1 20-20h3a15 15 0 0 1 13 8l7 11 18-9 5 8-25 14a7 7 0 0 1-9-3l-4-6m-1 15V79m-21 15h36"/>
@@ -60,13 +67,18 @@ const steps = [
   },
 ];
 
-export const linkFlow = `<section class="wrap section link-flow" aria-labelledby="flow-title">
+const flowLabels = {
+  it: { title: 'Come funziona', demo: 'Prova la demo', demoHref: '/crea/' },
+  en: { title: 'How it works', demo: 'Try the demo', demoHref: '/en/demo/' },
+};
+
+export const linkFlow = lang => `<section class="wrap section link-flow" aria-labelledby="flow-title">
   <div class="flow-header">
-    <h2 id="flow-title">Come funziona</h2>
-    <a href="/crea/">Prova la demo <span aria-hidden="true">→</span></a>
+    <h2 id="flow-title">${flowLabels[lang].title}</h2>
+    <a href="${flowLabels[lang].demoHref}">${flowLabels[lang].demo} <span aria-hidden="true">→</span></a>
   </div>
   <ol class="flow-steps" role="list">
-    ${steps.map(({ title, detail, drawing }, index) => `<li class="flow-step">
+    ${steps.map(({ drawing }, index) => { const [title, detail] = stepCopy[lang][index]; return `<li class="flow-step">
       <div class="flow-figure" aria-hidden="true">
         <svg class="flow-drawing" viewBox="0 0 200 112" fill="none" stroke="currentColor"
           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
@@ -74,6 +86,6 @@ export const linkFlow = `<section class="wrap section link-flow" aria-labelledby
         ${index < steps.length - 1 ? '<span class="flow-arrow">→</span>' : ''}
       </div>
       <div class="flow-copy"><h3>${title}</h3><p>${detail}</p></div>
-    </li>`).join('')}
+    </li>`; }).join('')}
   </ol>
 </section>`;

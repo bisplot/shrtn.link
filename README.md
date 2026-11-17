@@ -9,6 +9,11 @@ GitHub Actions publishes the static website to GitHub Pages from `main`. The
 Pages build includes the link demo and legacy routes. The signup and ping controls
 are enabled by the server build once the API is connected.
 
+The site is bilingual: Italian at the root and English under `/en/`. Page copy lives
+in `prelaunch/pages.mjs` (and `prelaunch/flow.mjs`), the privacy notice carries both
+languages in `prelaunch/privacy.mjs`, and browser strings come from the per-page
+`#strings` JSON. The legacy short-link, QR and 404 pages stay Italian.
+
 Run `npm run validate` and `npm run build` with Node.js 20 or later. Serve the
 generated site and API together with Python 3.12:
 

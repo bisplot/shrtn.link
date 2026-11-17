@@ -264,29 +264,30 @@ async function main(argv) {
 
   fs.writeFileSync(path.join(outDir, '404.html'), buildFallback);
 
-  const { layout, home, pricing, demo, privacy } = await import('./prelaunch/pages.mjs');
+  const { layout, home, pricing, demo, privacy, ROUTES, LANGS, t } = await import('./prelaunch/pages.mjs');
   const siteUrl = options.site.replace(/\/$/, '');
-  const routes = [],
-    pageList = [
-    ['', 'Link brevi per aziende', home],
-    ['pricing', 'Prezzi', pricing],
-    ['crea', 'Prova un link', demo],
-    ['privacy', 'Informativa sulla privacy', privacy(), 'Come Shrtn tratta i dati personali: nessun cookie, nessuna analisi del traffico, email solo per gli avvisi di lancio.'],
-  ];
-  for (const [route, title, content, description] of pageList) {
-    routes.push(route ? `/${route}/` : '/');
-    const pageDir = path.join(outDir, route);
-    fs.mkdirSync(pageDir, { recursive: true });
-    const page = layout(title, content, {
-      path: route ? `/${route}/` : '/',
-      apiOrigin: options.pages ? 'https://api.shrtn.link' : '',
-      site: siteUrl,
-      ...(description && { description }),
-    });
-    fs.writeFileSync(path.join(pageDir, 'index.html'), prefixPaths(page, basePath));
+  const pageBodies = { home, pricing, demo, privacy };
+  for (const route of Object.keys(pageBodies)) {
+    for (const lang of LANGS) {
+      const copy = t(lang);
+      const routePath = ROUTES[route][lang];
+      const pageDir = path.join(outDir, routePath.replace(/^\/|\/$/g, ''));
+      fs.mkdirSync(pageDir, { recursive: true });
+      const page = layout(copy.titles[route], pageBodies[route](lang), {
+        route,
+        lang,
+        apiOrigin: options.pages ? 'https://api.shrtn.link' : '',
+        site: siteUrl,
+        ...(route === 'privacy' && { description: copy.privacyDescription }),
+      });
+      fs.writeFileSync(path.join(pageDir, 'index.html'), prefixPaths(page, basePath));
+    }
   }
+  const alternates = route => LANGS.map(lang => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${siteUrl}${ROUTES[route][lang]}"/>`).join('\n');
   fs.writeFileSync(path.join(outDir, 'sitemap.xml'),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes.map(route => `  <url><loc>${siteUrl}${route}</loc></url>`).join('\n')}\n</urlset>\n`);
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${
+      Object.keys(pageBodies).flatMap(route => LANGS.map(lang => `  <url>\n    <loc>${siteUrl}${ROUTES[route][lang]}</loc>\n${alternates(route)}\n  </url>`)).join('\n')
+    }\n</urlset>\n`);
 
   const slugs = Object.keys(links);
   for (const slug of slugs) {
